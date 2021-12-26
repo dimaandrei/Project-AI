@@ -1,0 +1,8 @@
+D:\Andrei\Facultate\AN4SEM1\IA\Project-AI\BayesProject\bin\Debug\BayesProject.exe
+D:\Andrei\Facultate\AN4SEM1\IA\Project-AI\BayesProject\bin\Debug\BayesProject.pdb
+D:\Andrei\Facultate\AN4SEM1\IA\Project-AI\BayesProject\obj\Debug\BayesProject.csprojAssemblyReference.cache
+D:\Andrei\Facultate\AN4SEM1\IA\Project-AI\BayesProject\obj\Debug\BayesProject.Properties.Resources.resources
+D:\Andrei\Facultate\AN4SEM1\IA\Project-AI\BayesProject\obj\Debug\BayesProject.csproj.GenerateResource.cache
+D:\Andrei\Facultate\AN4SEM1\IA\Project-AI\BayesProject\obj\Debug\BayesProject.csproj.CoreCompileInputs.cache
+D:\Andrei\Facultate\AN4SEM1\IA\Project-AI\BayesProject\obj\Debug\BayesProject.exe
+D:\Andrei\Facultate\AN4SEM1\IA\Project-AI\BayesProject\obj\Debug\BayesProject.pdb
