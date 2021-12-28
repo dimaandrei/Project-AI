@@ -6,3 +6,12 @@ D:\Andrei\Facultate\AN4SEM1\IA\Project-AI\BayesProject\obj\Debug\BayesProject.cs
 D:\Andrei\Facultate\AN4SEM1\IA\Project-AI\BayesProject\obj\Debug\BayesProject.csproj.CoreCompileInputs.cache
 D:\Andrei\Facultate\AN4SEM1\IA\Project-AI\BayesProject\obj\Debug\BayesProject.exe
 D:\Andrei\Facultate\AN4SEM1\IA\Project-AI\BayesProject\obj\Debug\BayesProject.pdb
+D:\Facultate\ANUL_4\SEM 1\IA\Git-proiect\Project-AI\BayesProject\bin\Debug\BayesProject.exe
+D:\Facultate\ANUL_4\SEM 1\IA\Git-proiect\Project-AI\BayesProject\bin\Debug\BayesProject.pdb
+D:\Facultate\ANUL_4\SEM 1\IA\Git-proiect\Project-AI\BayesProject\obj\Debug\BayesProject.csprojAssemblyReference.cache
+D:\Facultate\ANUL_4\SEM 1\IA\Git-proiect\Project-AI\BayesProject\obj\Debug\BayesProject.Properties.Resources.resources
+D:\Facultate\ANUL_4\SEM 1\IA\Git-proiect\Project-AI\BayesProject\obj\Debug\BayesProject.csproj.GenerateResource.cache
+D:\Facultate\ANUL_4\SEM 1\IA\Git-proiect\Project-AI\BayesProject\obj\Debug\BayesProject.csproj.CoreCompileInputs.cache
+D:\Facultate\ANUL_4\SEM 1\IA\Git-proiect\Project-AI\BayesProject\obj\Debug\BayesProject.exe
+D:\Facultate\ANUL_4\SEM 1\IA\Git-proiect\Project-AI\BayesProject\obj\Debug\BayesProject.pdb
+D:\Facultate\ANUL_4\SEM 1\IA\Git-proiect\Project-AI\BayesProject\obj\Debug\BayesProject.Form1.resources

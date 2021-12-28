@@ -18,14 +18,14 @@ namespace BayesProject
             networkGraph = new Graph(Int32.Parse(lines[0].Split(':')[1].Trim()));
             int pos = 2;
             //number of nodes
-            for(int i=0;i<noNodes;++i)
+            for(int i = 0; i < noNodes; ++i)
             {
                 //start from 3rd line
                 //read first line with nodes
                 var temp = lines[pos].Split(':');
                 var nodeID = temp[0].Trim();
                 var parents = Regex.Replace(temp[1],@"[{} \t]","").Split(',');
-                if(parents.Length==1 && string.IsNullOrEmpty(parents[0]))
+                if(parents.Length == 1 && string.IsNullOrEmpty(parents[0]))
                 {
                     networkGraph.AddNodes(nodeID, null);
                     networkGraph.SetProbabilities(nodeID, lines.GetRange(pos + 1, 1));
@@ -41,6 +41,11 @@ namespace BayesProject
 
             //don't forget to enable console output
             networkGraph.PrintNodesProbabilities();
+        }
+
+        public Graph getNetworkGraph
+        {
+            get { return networkGraph; }
         }
     }
 }

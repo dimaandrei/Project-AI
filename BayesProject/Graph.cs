@@ -78,7 +78,7 @@ namespace BayesProject
                 L.Add(tempNode);
                 S.RemoveAt(0);
 
-                var aux = nodes.Where(node=> node.IsChidOf(tempNode.NodeID)==true).ToList();
+                var aux = nodes.Where(node => node.IsChidOf(tempNode.NodeID)==true).ToList();
                 foreach(var node in aux)
                 {
                     if(--indegree[nodes.IndexOf(node)] ==0)

@@ -19,7 +19,7 @@ namespace BayesProject
         private readonly String VertexId;
         private readonly HashSet<String> ParentAdjacencySet;
         private TypeOfEvidence evidence = TypeOfEvidence.NotPresent;
-        private  Dictionary<string, Tuple<double,double>> probabilitiesMap;
+        private  Dictionary<string, Tuple<double, double>> probabilitiesMap;
 
         public Node(String _vertexId)
         {
@@ -55,10 +55,10 @@ namespace BayesProject
         public void SetProbabilities(List<string> values)
         {
             if (values.Count != Math.Pow(2, ParentAdjacencySet.Count))
-                throw new ArgumentException("Number of lines doesn't match.");//think more about this one
-            if(values.Count==1)
+                throw new ArgumentException("Number of lines doesn't match."); //think more about this one
+            if(values.Count == 1)
             {
-                var val = values.First<string>().Split(' ').Select(p=>Double.Parse(p)).ToList();
+                var val = values.First<string>().Split(' ').Select(p => Double.Parse(p)).ToList();
                 probabilitiesMap.Add("p", Tuple.Create(val[0], val[1]));
             }
             else
@@ -81,7 +81,7 @@ namespace BayesProject
 
         public string ParentsToString()
         {
-            string aux="";
+            string aux = "";
             foreach(var i in ParentAdjacencySet)
             {
                 aux += i + " ";
@@ -95,10 +95,10 @@ namespace BayesProject
 
         public void PrintProbabilites()
         {
-            Console.WriteLine("Probabilities for \""+VertexId+"\"with parents [" + ParentsToString()+"]:");
+            Console.WriteLine("Probabilities for \"" + VertexId + "\"with parents [" + ParentsToString() + "]:");
             foreach(var p in probabilitiesMap)
             {
-                Console.WriteLine("\t"+p.Key+": "+p.Value);
+                Console.WriteLine("\t" + p.Key + ": " + p.Value);
             }
             Console.WriteLine();
         }
