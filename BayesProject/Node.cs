@@ -95,7 +95,7 @@ namespace BayesProject
 
         public void PrintProbabilites()
         {
-            Console.WriteLine("Probabilities for \"" + VertexId + "\"with parents [" + ParentsToString() + "]:");
+            Console.WriteLine("Probabilities for \"" + VertexId + "\" with parents [" + ParentsToString() + "]:");
             foreach(var p in probabilitiesMap)
             {
                 Console.WriteLine("\t" + p.Key + ": " + p.Value);

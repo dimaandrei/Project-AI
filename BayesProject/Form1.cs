@@ -23,28 +23,37 @@ namespace BayesProject
         }
 
         int k = 1;
-        public System.Windows.Forms.TextBox AddTextBox(string NodeID)
+        public TextBox AddTextBox(string NodeID)
         {
             TextBox txt = new TextBox();
             txt.Text = NodeID;
+            txt.Font = new Font("Modern No. 20", 10, FontStyle.Bold);
             txt.Size = new Size(200, 300);
+            txt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+
             ComboBox comboBox = new ComboBox();
+            comboBox.Font = new Font("Modern No. 20", 10, FontStyle.Bold);
             comboBox.Items.Add("Yes");
             comboBox.Items.Add("No");
-            comboBox.Items.Add("Not present");
+            comboBox.Items.Add("NotPresent");
+
             RadioButton radioButton = new RadioButton();
+
             this.Controls.Add(txt);
             this.Controls.Add(comboBox);
             this.Controls.Add(radioButton);
+
             radioButton.Enabled = false;
             checks.Add(radioButton);
-            radioButton.Top = k * 35;
+            radioButton.Top = k * 45;
             radioButton.Left = 420;
-            comboBox.Top = k * 35;
+
+            comboBox.Top = k * 45;
             comboBox.Left = 250;
             comboBox.Enabled = false;
             comboBoxes.Add(comboBox);
-            txt.Top = k * 35;
+
+            txt.Top = k * 45;
             txt.Left = 30;
             k++;
             return txt;
@@ -66,18 +75,26 @@ namespace BayesProject
             {
                 // Functie de interogare
                 bayesNetwork.getNetworkGraph.GetNodes[indexChecked].Evidence = (TypeOfEvidence)Enum.Parse(typeof(TypeOfEvidence), comboBoxes[indexChecked].Text);
+                RichTextBox richTextBox = new RichTextBox();
+                richTextBox.Size = new Size(700, 100);
+                richTextBox.Left = 15;
+                richTextBox.Top = 280;
+                this.Controls.Add(richTextBox);
+                richTextBox.Font = new Font("Modern No. 20", 18, FontStyle.Bold);
+                richTextBox.ForeColor = Color.Red;
+                richTextBox.AppendText("The node {" + bayesNetwork.getNetworkGraph.GetNodes[indexChecked].NodeID + "} was queried with evidence {" + bayesNetwork.getNetworkGraph.GetNodes[indexChecked].Evidence + "}.");
 
-                Console.WriteLine("S-a interogat nodul " + bayesNetwork.getNetworkGraph.GetNodes[indexChecked].NodeID + " cu evidenta " + bayesNetwork.getNetworkGraph.GetNodes[indexChecked].Evidence);
+                Console.WriteLine("The node {" + bayesNetwork.getNetworkGraph.GetNodes[indexChecked].NodeID + "} was queried with evidence {" + bayesNetwork.getNetworkGraph.GetNodes[indexChecked].Evidence + "}.");
             }
             else
-                throw new Exception("Trebuie selectat nodul ce se doreste a fi interogat si evidenta acestuia!");
+                MessageBox.Show("You didn't select any node! You must select one for querying!", "Warning");
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             checks.ForEach(action => action.Enabled = true);
             comboBoxes.ForEach(action => action.Enabled = true);
-            comboBoxes.ForEach(item => item.Text = "Not present");
+            comboBoxes.ForEach(item => item.Text = "NotPresent");
             button1.Enabled = true;
         }
     }

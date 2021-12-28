@@ -24,7 +24,7 @@ namespace BayesProject
                 //read first line with nodes
                 var temp = lines[pos].Split(':');
                 var nodeID = temp[0].Trim();
-                var parents = Regex.Replace(temp[1],@"[{} \t]","").Split(',');
+                var parents = Regex.Replace(temp[1], @"[{} \t]","").Split(',');
                 if(parents.Length == 1 && string.IsNullOrEmpty(parents[0]))
                 {
                     networkGraph.AddNodes(nodeID, null);
@@ -38,7 +38,6 @@ namespace BayesProject
                     pos += Convert.ToInt32(Math.Pow(2, parents.Length)) + 2;
                 }
             }
-
             //don't forget to enable console output
             networkGraph.PrintNodesProbabilities();
         }

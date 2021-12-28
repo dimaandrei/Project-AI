@@ -57,7 +57,7 @@ namespace BayesProject
             List<Node> S = new List<Node>();
             int[] indegree=new int[noNodes];
 
-            for(int i=0;i<noNodes;++i)
+            for(int i = 0; i < noNodes; ++i)
             {
                 indegree[i] = nodes[i].ParentsNumber;
             }
@@ -71,17 +71,16 @@ namespace BayesProject
             }
 
             int cnt = 0;
-
             while(S.Count!=0)
             {
                 var tempNode = S.First();
                 L.Add(tempNode);
                 S.RemoveAt(0);
 
-                var aux = nodes.Where(node => node.IsChidOf(tempNode.NodeID)==true).ToList();
+                var aux = nodes.Where(node => node.IsChidOf(tempNode.NodeID) == true).ToList();
                 foreach(var node in aux)
                 {
-                    if(--indegree[nodes.IndexOf(node)] ==0)
+                    if(--indegree[nodes.IndexOf(node)] == 0)
                     {
                         S.Add(node);
                     }
