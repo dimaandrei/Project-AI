@@ -7,7 +7,7 @@ Abscess: {}
 0.05 0.95
 
 Fever: {Flu, Abscess}
-Yes No 0.8 0.2
+Yes Yes 0.8 0.2
 Yes No 0.7 0.3
 No Yes 0.25 0.75
 No No 0.05 0.95
