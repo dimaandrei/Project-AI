@@ -40,6 +40,7 @@ namespace BayesProject
             }
             //don't forget to enable console output
             networkGraph.PrintNodesProbabilities();
+            Console.WriteLine(networkGraph.GetProbabilityOfNode("Fever", TypeOfEvidence.Yes, "No No"));
         }
 
         public Graph getNetworkGraph

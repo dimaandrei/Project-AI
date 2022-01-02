@@ -93,5 +93,25 @@ namespace BayesProject
 
             return L;
         }
+
+        public double GetProbabilityOfNode(string nodeID, TypeOfEvidence typeOfProbability, string parentsEvidence) //e.g. parentsEvidence = "Yes Yes" || parentsEvidence = "p"
+        {
+            
+            foreach(var node in nodes)
+            {
+                if(node.NodeID == nodeID)
+                {
+
+                    var p = node.GetProbabilities(parentsEvidence);
+                    if (typeOfProbability == TypeOfEvidence.Yes)
+                        return p.Item1;
+                    else if (typeOfProbability == TypeOfEvidence.No)
+                        return p.Item2;
+                    else
+                        throw new Exception("Incorrect type of probability!");
+                }
+            }
+            throw new Exception("Probability not found!");
+        }
     }
 }
