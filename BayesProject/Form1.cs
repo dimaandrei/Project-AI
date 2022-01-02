@@ -56,7 +56,7 @@ namespace BayesProject
             this.Controls.Add(textBox);
             this.Controls.Add(comboBox);
             this.Controls.Add(radioButton);
-            
+
             // The radioButton and the comboBox should be disabled until you want to select a node to querry
             radioButton.Enabled = false;
             comboBox.Enabled = false;
@@ -111,7 +111,7 @@ namespace BayesProject
             // Clear richTextBox before querry the node
             richTextBox.Clear();
             richTextBox.Focus();
-            
+
             // Check if any radioButton was checked
             bool checkRadioButton = checks.Any(item => item.Checked == true);
 
@@ -150,7 +150,8 @@ namespace BayesProject
                 Console.WriteLine("The node {" + bayesNetwork.getNetworkGraph.GetNodes[indexChecked].NodeID + "} was queried with evidence {" + bayesNetwork.getNetworkGraph.GetNodes[indexChecked].Evidence + "}.");
 
                 InferenceByEnumeration inf = new InferenceByEnumeration(bayesNetwork);
-                inf.EnumerationAsk(bayesNetwork.getNetworkGraph.GetNodes[indexChecked].NodeID);
+                var prob = inf.EnumerationAsk(bayesNetwork.getNetworkGraph.GetNodes[indexChecked].NodeID);
+                Console.WriteLine("Prob: " + prob[0] + " " + prob[1]);
             }
             else
             {

@@ -53,21 +53,39 @@ namespace BayesProject
             var y = vars.First();
             vars.Remove(y);
 
-            if (y.Evidence != TypeOfEvidence.NotPresent)
+            List<Node> parents = new List<Node>();
+
+            foreach (var node in _bayesNetwork.getNetworkGraph.GetNodes)
             {
-                var sum = 0.0;
-
-                foreach (var parent in y.GetAdjacentVertices())
+                if (y.IsChidOf(node.NodeID))
                 {
-                    //
+                    parents.Add(node);
                 }
+            }
+            var evidence = "";
 
-                return sum * EnumerateAll(vars, type);
+            if (parents.Count == 0)
+            {
+                evidence = "p";
             }
             else
             {
-                // TO DO
-                return 0.0;
+                foreach (var parent in parents)
+                {
+                    evidence += parent.Evidence + " ";
+                }
+
+                evidence = evidence.Remove(evidence.Length - 1, 1);
+            }
+
+            if (y.Evidence != TypeOfEvidence.NotPresent)
+            {
+                return _bayesNetwork.getNetworkGraph.GetProbabilityOfNode(y.NodeID, y.Evidence, evidence) * EnumerateAll(vars, type);
+            }
+            else
+            {
+                return _bayesNetwork.getNetworkGraph.GetProbabilityOfNode(y.NodeID, TypeOfEvidence.No, evidence) * EnumerateAll(vars, type) +
+                    _bayesNetwork.getNetworkGraph.GetProbabilityOfNode(y.NodeID, TypeOfEvidence.Yes, evidence) * EnumerateAll(vars, type);
             }
         }
 
