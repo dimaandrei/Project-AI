@@ -96,7 +96,6 @@ namespace BayesProject
 
         public double GetProbabilityOfNode(string nodeID, TypeOfEvidence typeOfProbability, string parentsEvidence) //e.g. parentsEvidence = "Yes Yes" || parentsEvidence = "p"
         {
-            
             foreach(var node in nodes)
             {
                 if(node.NodeID == nodeID)
