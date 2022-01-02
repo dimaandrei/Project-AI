@@ -85,6 +85,9 @@ namespace BayesProject
                 richTextBox.AppendText("The node {" + bayesNetwork.getNetworkGraph.GetNodes[indexChecked].NodeID + "} was queried with evidence {" + bayesNetwork.getNetworkGraph.GetNodes[indexChecked].Evidence + "}.");
 
                 Console.WriteLine("The node {" + bayesNetwork.getNetworkGraph.GetNodes[indexChecked].NodeID + "} was queried with evidence {" + bayesNetwork.getNetworkGraph.GetNodes[indexChecked].Evidence + "}.");
+
+                InferenceByEnumeration inf = new InferenceByEnumeration(bayesNetwork);
+                inf.EnumerationAsk(bayesNetwork.getNetworkGraph.GetNodes[indexChecked].NodeID);
             }
             else
                 MessageBox.Show("You didn't select any node! You must select one for querying!", "Warning");
