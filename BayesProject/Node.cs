@@ -21,11 +21,19 @@ namespace BayesProject
         private TypeOfEvidence evidence = TypeOfEvidence.NotPresent;
         private  Dictionary<string, Tuple<double, double>> probabilitiesMap;
 
+
+
         public Node(String _vertexId)
         {
             this.VertexId = _vertexId;
             this.ParentAdjacencySet = new HashSet<String>();
             probabilitiesMap = new Dictionary<string, Tuple<double, double>>();
+        }
+
+        public Node CloneNode()
+        {
+            Node newNode = (Node)this.MemberwiseClone();
+            return newNode;
         }
 
         public bool IsChidOf(String id)
@@ -69,7 +77,7 @@ namespace BayesProject
                     var key = aux.Take(ParentAdjacencySet.Count).Aggregate("", (acumulator, partial) => acumulator += partial + " ").Trim();
                     var probs=aux.Reverse().Take(2).Select(p => Double.Parse(p)).ToList();
 
-                    probabilitiesMap.Add(key, Tuple.Create(probs[0], probs[1]));
+                    probabilitiesMap.Add(key, Tuple.Create(probs[1], probs[0]));
                 }
             }
         }
