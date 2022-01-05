@@ -42,8 +42,14 @@ namespace BayesProject
                 else
                 {
                     networkGraph.AddNodes(node, parents);
-                    networkGraph.SetProbabilities(nodeID, lines.GetRange(pos + 1, Convert.ToInt32(Math.Pow(2, parents.Length))));
-                    pos += Convert.ToInt32(Math.Pow(2, parents.Length)) + 2;
+                    var noOfProb = 1;
+                    foreach(var parent in parents)
+                    {
+                        noOfProb *= networkGraph.GetNode(parent).GetEvidencesNumber();
+                    }
+
+                    networkGraph.SetProbabilities(nodeID, lines.GetRange(pos + 1, noOfProb));
+                    pos += noOfProb+2;
                 }
             }
             //don't forget to enable console output
