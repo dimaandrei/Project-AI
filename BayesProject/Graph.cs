@@ -107,22 +107,22 @@ namespace BayesProject
 
         public double GetProbabilityOfNode(string nodeID, String typeOfProbability, string parentsEvidence) //e.g. parentsEvidence = "Yes Yes" || parentsEvidence = "p"
         {
-            /*
+            
             foreach(var node in nodes)
             {
                 if(node.NodeID == nodeID)
                 {
 
                     var p = node.GetProbabilities(parentsEvidence);
-                    if (typeOfProbability == TypeOfEvidence.Yes)
-                        return p.Item1;
-                    else if (typeOfProbability == TypeOfEvidence.No)
-                        return p.Item2;
-                    else
-                        throw new Exception("Incorrect type of probability!");
+                    foreach(var evidence in node.GetEvidenceDomain())
+                    {
+                        if (evidence == typeOfProbability)
+                            return p[node.GetEvidenceDomain().IndexOf(evidence)];
+                        
+                    }
                 }
             }
-            */
+            
             throw new Exception("Probability not found!");
         }
     }
