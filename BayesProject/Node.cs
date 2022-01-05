@@ -55,6 +55,11 @@ namespace BayesProject
             evidenceDomain.Add(evidence);
         }
 
+        public int GetEvidencesNumber()
+        {
+            return evidenceDomain.Count;
+        }
+
         public List<String> GetEvidenceDomain()
         {
             return new List<String>(evidenceDomain);
@@ -68,8 +73,8 @@ namespace BayesProject
 
         public void SetProbabilities(List<string> values)
         {
-            if (values.Count != Math.Pow(2, ParentAdjacencySet.Count))
-                throw new ArgumentException("Number of lines doesn't match."); //think more about this one
+           /* if (values.Count != Math.Pow(2, ParentAdjacencySet.Count))
+                throw new ArgumentException("Number of lines doesn't match."); //think more about this one*/
             if (values.Count == 1)
             {
                 var val = values.First<string>().Split(' ').Select(p => Double.Parse(p)).ToList();
@@ -81,7 +86,7 @@ namespace BayesProject
                 {
                     var aux = line.Split(' ');
                     var key = aux.Take(ParentAdjacencySet.Count).Aggregate("", (acumulator, partial) => acumulator += partial + " ").Trim();
-                    var probs = aux.Reverse().Take(2).Select(p => Double.Parse(p)).ToList();
+                    var probs = aux.Reverse().Take(evidenceDomain.Count).Select(p => Double.Parse(p)).ToList();
                     probs.Reverse();
                     probabilitiesMap.Add(key, probs);
                 }
