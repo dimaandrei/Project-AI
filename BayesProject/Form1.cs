@@ -151,8 +151,18 @@ namespace BayesProject
                 Console.WriteLine("The node {" + bayesNetwork.getNetworkGraph.GetNodes[indexChecked].NodeID + "} was queried with evidence {" + bayesNetwork.getNetworkGraph.GetNodes[indexChecked].Evidence + "}.");
 
                 InferenceByEnumeration inf = new InferenceByEnumeration(bayesNetwork);
-                var prob = inf.EnumerationAsk(bayesNetwork.getNetworkGraph.GetNodes[indexChecked].NodeID);
-                Console.WriteLine("Prob: " + prob[0] + " " + prob[1]);
+                var probabilities = inf.EnumerationAsk(bayesNetwork.getNetworkGraph.GetNodes[indexChecked].NodeID);
+                //Console.WriteLine("Prob: " + prob[0] + " " + prob[1]);
+
+                var message = "";
+                var evidences = bayesNetwork.getNetworkGraph.GetNode(bayesNetwork.getNetworkGraph.GetNodes[indexChecked].NodeID).GetEvidenceDomain();
+
+                for (int i = 0; i < probabilities.Length; i++)
+                {
+                    message += "P(" + evidences[i] +") = " + probabilities[i] + Environment.NewLine;
+                }
+
+                MessageBox.Show(message, "Query Results");
             }
             else
             {
