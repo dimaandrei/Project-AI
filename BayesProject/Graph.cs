@@ -15,17 +15,16 @@ namespace BayesProject
             this.nodes = new List<Node>();
         }
 
-        public void AddNodes(string id, string []parents)
+        public void AddNodes(Node node, string []parents)
         {
-            var temp = new Node(id);
             if (parents!=null)
             {
                 foreach (var parent in parents)
                 {
-                    temp.AddParent(parent);
+                    node.AddParent(parent);
                 }
             }
-            nodes.Add(temp);
+            nodes.Add(node);
         }
 
         public void SetProbabilities(string nodeID, List<string> values)
@@ -41,12 +40,24 @@ namespace BayesProject
             }
         }
 
+        public Node GetNode(String id)
+        {
+            try
+            {
+                return nodes.Where(node => node.NodeID == id).ToList().First();
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
         public List<Node> GetNodes
         {
             get { return nodes; }
         }
 
-        public void SetNodeEvidence(string nodeID, TypeOfEvidence evidence)
+        public void SetNodeEvidence(string nodeID, String evidence)
         {
             nodes.Where(node => node.NodeID == nodeID).ToList().ForEach(node => node.Evidence=evidence);
         }
@@ -94,8 +105,9 @@ namespace BayesProject
             return L;
         }
 
-        public double GetProbabilityOfNode(string nodeID, TypeOfEvidence typeOfProbability, string parentsEvidence) //e.g. parentsEvidence = "Yes Yes" || parentsEvidence = "p"
+        public double GetProbabilityOfNode(string nodeID, String typeOfProbability, string parentsEvidence) //e.g. parentsEvidence = "Yes Yes" || parentsEvidence = "p"
         {
+            /*
             foreach(var node in nodes)
             {
                 if(node.NodeID == nodeID)
@@ -110,6 +122,7 @@ namespace BayesProject
                         throw new Exception("Incorrect type of probability!");
                 }
             }
+            */
             throw new Exception("Probability not found!");
         }
     }

@@ -33,7 +33,7 @@ namespace BayesProject
         /// </summary>
         /// <param name="NodeID">The name of node</param>
         /// <returns>Returns a textbox</returns>
-        public TextBox AddNodeField(string NodeID)
+        public TextBox AddNodeField(string NodeID, List<String> domain)
         {
             // Add a textBox for each node
             TextBox textBox = new TextBox();
@@ -45,7 +45,7 @@ namespace BayesProject
             // Add a comboBox for each node. The items should be {Yes, No, NotPresent}
             ComboBox comboBox = new ComboBox();
             comboBox.Font = new Font("Modern No. 20", 10, FontStyle.Bold);
-            foreach(var i in Enum.GetValues(typeof(TypeOfEvidence)))
+            foreach (var i in domain)
             {
                 comboBox.Items.Add(i);
             }
@@ -99,7 +99,7 @@ namespace BayesProject
             CenterToScreen();
             // Add a field for each node
             foreach (var i in bayesNetwork.getNetworkGraph.GetNodes)
-                AddNodeField(i.NodeID + " -> Parents [" + i.ParentsToString() + "]");
+                AddNodeField(i.NodeID + " -> Parents [" + i.ParentsToString() + "]", i.GetEvidenceDomain());
         }
 
         /// <summary>
@@ -137,7 +137,7 @@ namespace BayesProject
                 // Set the evidence of each node
                 for (var i = 0; i < bayesNetwork.getNetworkGraph.GetNodes.Count; ++i)
                 {
-                    bayesNetwork.getNetworkGraph.GetNodes[i].Evidence = (TypeOfEvidence)Enum.Parse(typeof(TypeOfEvidence), comboBoxes[i].Text);
+                    bayesNetwork.getNetworkGraph.GetNodes[i].Evidence = comboBoxes[i].Text;
 
                     // Append to the richTextBox the evidence of each node
                     richTextBox.AppendText("The node {" + bayesNetwork.getNetworkGraph.GetNodes[i].NodeID + "} was set with evidence {" + bayesNetwork.getNetworkGraph.GetNodes[i].Evidence + "}." + System.Environment.NewLine);

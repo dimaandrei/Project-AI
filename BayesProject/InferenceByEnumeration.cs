@@ -29,18 +29,22 @@ namespace BayesProject
         public double[] EnumerationAsk(String queryVariable)
         {
             var nodes = _bayesNetwork.getNetworkGraph.KahnSorting();
-            TypeOfEvidence[] evidences = (TypeOfEvidence[])Enum.GetValues(typeof(TypeOfEvidence));
 
-            double[] Q = new double[evidences.Length - 1];
+            var querryNode = _bayesNetwork.getNetworkGraph.GetNode(queryVariable);
+
+            if (querryNode == null) throw new Exception("Querry node - not found!");
+
+            double[] Q = new double[querryNode.GetEvidenceDomain().Count];
 
             foreach (var node in nodes)
             {
-                if (node.NodeID == queryVariable && node.Evidence != TypeOfEvidence.NotPresent)
+                var nodeEvidenceDomain = node.GetEvidenceDomain();
+                if (node.NodeID == queryVariable && node.Evidence != Node.NOT_PRESENT)
                 {
                     int j = 0;
-                    foreach (var typeOfEvidence in evidences)
+                    foreach (var typeOfEvidence in nodeEvidenceDomain)
                     {
-                        if (typeOfEvidence == TypeOfEvidence.NotPresent)
+                        if (typeOfEvidence == Node.NOT_PRESENT)
                             continue;
 
                         if (node.Evidence == typeOfEvidence)
@@ -57,18 +61,18 @@ namespace BayesProject
                 }
             }
 
-            
+
             int i = 0;
 
-            foreach (var typeOfEvidence in evidences)
+            foreach (var typeOfEvidence in querryNode.GetEvidenceDomain())
             {
-                if (typeOfEvidence == TypeOfEvidence.NotPresent)
+                if (typeOfEvidence == Node.NOT_PRESENT)
                     continue;
-                var vars = new List< Node > ();
-                foreach(var node in nodes)
+                var vars = new List<Node>();
+                foreach (var node in nodes)
                 {
                     Node aux = node.CloneNode();
-                    if(aux.NodeID == queryVariable)
+                    if (aux.NodeID == queryVariable)
                     {
                         aux.Evidence = typeOfEvidence;
                     }
@@ -76,11 +80,11 @@ namespace BayesProject
                 }
 
                 _bayesNetwork.getNetworkGraph.SetNodeEvidence(queryVariable, typeOfEvidence);
-                
-                Q[i] = EnumerateAll(vars, typeOfEvidence); 
-                
-                _bayesNetwork.getNetworkGraph.SetNodeEvidence(queryVariable, TypeOfEvidence.NotPresent);
-                i++;                                      
+
+                Q[i] = EnumerateAll(vars, typeOfEvidence, querryNode.GetEvidenceDomain());
+
+                _bayesNetwork.getNetworkGraph.SetNodeEvidence(queryVariable, Node.NOT_PRESENT);
+                i++;
             }
 
             return Normalization(Q);
@@ -88,16 +92,16 @@ namespace BayesProject
         private List<Node> CopyNodesList(List<Node> nodes)
         {
             List<Node> newList = new List<Node>();
-            foreach(var node in nodes)
+            foreach (var node in nodes)
             {
                 newList.Add(node.CloneNode());
             }
             return newList;
         }
 
-        private double EnumerateAll(List<Node> vars, TypeOfEvidence type)
+        private double EnumerateAll(List<Node> vars, String type, List<String> domain)
         {
-            if (vars.Count == 0) 
+            if (vars.Count == 0)
                 return 1.0;
 
             var y = vars.First();
@@ -111,7 +115,7 @@ namespace BayesProject
                 {
                     parents.Add(node);
                 }
-            }   
+            }
 
             var evidence = "";
 
@@ -129,18 +133,18 @@ namespace BayesProject
                 evidence = evidence.Remove(evidence.Length - 1, 1);
             }
 
-            if (y.Evidence != TypeOfEvidence.NotPresent)
+            if (y.Evidence != Node.NOT_PRESENT)
             {
-                return _bayesNetwork.getNetworkGraph.GetProbabilityOfNode(y.NodeID, y.Evidence, evidence) * EnumerateAll(vars, type);
+                return _bayesNetwork.getNetworkGraph.GetProbabilityOfNode(y.NodeID, y.Evidence, evidence) * EnumerateAll(vars, type, domain);
             }
             else
             {
                 double sum = 0.0;
-                _bayesNetwork.getNetworkGraph.SetNodeEvidence(y.NodeID, TypeOfEvidence.No);
-                sum += _bayesNetwork.getNetworkGraph.GetProbabilityOfNode(y.NodeID, TypeOfEvidence.No, evidence) * EnumerateAll(CopyNodesList(vars), TypeOfEvidence.No);
-                _bayesNetwork.getNetworkGraph.SetNodeEvidence(y.NodeID, TypeOfEvidence.Yes);
-                sum += _bayesNetwork.getNetworkGraph.GetProbabilityOfNode(y.NodeID, TypeOfEvidence.Yes, evidence) * EnumerateAll(CopyNodesList(vars), TypeOfEvidence.Yes);
-                _bayesNetwork.getNetworkGraph.SetNodeEvidence(y.NodeID, TypeOfEvidence.NotPresent);
+                foreach (var ev in domain)
+                {
+                    _bayesNetwork.getNetworkGraph.SetNodeEvidence(y.NodeID, ev);
+                    sum += _bayesNetwork.getNetworkGraph.GetProbabilityOfNode(y.NodeID, ev, evidence) * EnumerateAll(CopyNodesList(vars), ev, domain);
+                };
                 return sum;
             }
         }

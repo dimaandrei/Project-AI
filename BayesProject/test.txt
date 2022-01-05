@@ -1,21 +1,26 @@
 Nodes: 5
 
+[Yes, No]
 Flu: {}
 0.1 0.9
 
+[Yes, No]
 Abscess: {}
 0.05 0.95
 
+[Yes, No]
 Fever: {Flu, Abscess}
 Yes Yes 0.8 0.2
 Yes No 0.7 0.3
 No Yes 0.25 0.75
 No No 0.05 0.95
 
+[Yes, No]
 Fatigue: {Fever}
 Yes 0.6 0.4
 No 0.2 0.8
 
+[Yes, No]
 Anorexia: {Fever}
 Yes 0.5 0.5
 No 0.1 0.9
