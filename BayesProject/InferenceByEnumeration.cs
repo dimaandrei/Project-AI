@@ -68,20 +68,13 @@ namespace BayesProject
             {
                 if (typeOfEvidence == Node.NOT_PRESENT)
                     continue;
-                var vars = new List<Node>();
-                foreach (var node in nodes)
-                {
-                    Node aux = node.CloneNode();
-                    if (aux.NodeID == queryVariable)
-                    {
-                        aux.Evidence = typeOfEvidence;
-                    }
-                    vars.Add(aux);
-                }
+
+                _bayesNetwork.getNetworkGraph.SetNodeEvidence(queryVariable, typeOfEvidence);
+                var vars = CopyNodesList(nodes);
 
                 _bayesNetwork.getNetworkGraph.SetNodeEvidence(queryVariable, typeOfEvidence);
 
-                Q[i] = EnumerateAll(vars, typeOfEvidence, querryNode.GetEvidenceDomain());
+                Q[i] = EnumerateAll(vars, querryNode.GetEvidenceDomain());
 
                 _bayesNetwork.getNetworkGraph.SetNodeEvidence(queryVariable, Node.NOT_PRESENT);
                 i++;
@@ -99,7 +92,7 @@ namespace BayesProject
             return newList;
         }
 
-        private double EnumerateAll(List<Node> vars, String type, List<String> domain)
+        private double EnumerateAll(List<Node> vars, List<String> domain)
         {
             if (vars.Count == 0)
                 return 1.0;
@@ -135,7 +128,7 @@ namespace BayesProject
 
             if (y.Evidence != Node.NOT_PRESENT)
             {
-                return _bayesNetwork.getNetworkGraph.GetProbabilityOfNode(y.NodeID, y.Evidence, evidence) * EnumerateAll(vars, type, domain);
+                return _bayesNetwork.getNetworkGraph.GetProbabilityOfNode(y.NodeID, y.Evidence, evidence) * EnumerateAll(vars, domain);
             }
             else
             {
@@ -143,8 +136,9 @@ namespace BayesProject
                 foreach (var ev in domain)
                 {
                     _bayesNetwork.getNetworkGraph.SetNodeEvidence(y.NodeID, ev);
-                    sum += _bayesNetwork.getNetworkGraph.GetProbabilityOfNode(y.NodeID, ev, evidence) * EnumerateAll(CopyNodesList(vars), ev, domain);
+                    sum += _bayesNetwork.getNetworkGraph.GetProbabilityOfNode(y.NodeID, ev, evidence) * EnumerateAll(CopyNodesList(vars), domain);
                 };
+                _bayesNetwork.getNetworkGraph.SetNodeEvidence(y.NodeID, Node.NOT_PRESENT);
                 return sum;
             }
         }
