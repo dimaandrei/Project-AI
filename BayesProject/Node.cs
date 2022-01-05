@@ -14,13 +14,13 @@ namespace BayesProject
         private readonly HashSet<String> ParentAdjacencySet;
         private String evidence;
         private List<String> evidenceDomain;
-        private Dictionary<string, Tuple<double, double>> probabilitiesMap;
+        private Dictionary<string, List<double>> probabilitiesMap;
 
         public Node(String _vertexId)
         {
             this.VertexId = _vertexId;
             this.ParentAdjacencySet = new HashSet<String>();
-            probabilitiesMap = new Dictionary<string, Tuple<double, double>>();
+            probabilitiesMap = new Dictionary<string, List<double>>();
             evidenceDomain = new List<string>();
             evidence = NOT_PRESENT;
         }
@@ -73,7 +73,7 @@ namespace BayesProject
             if (values.Count == 1)
             {
                 var val = values.First<string>().Split(' ').Select(p => Double.Parse(p)).ToList();
-                probabilitiesMap.Add("p", Tuple.Create(val[0], val[1]));
+                probabilitiesMap.Add("p", val);
             }
             else
             {
@@ -82,13 +82,13 @@ namespace BayesProject
                     var aux = line.Split(' ');
                     var key = aux.Take(ParentAdjacencySet.Count).Aggregate("", (acumulator, partial) => acumulator += partial + " ").Trim();
                     var probs = aux.Reverse().Take(2).Select(p => Double.Parse(p)).ToList();
-
-                    probabilitiesMap.Add(key, Tuple.Create(probs[1], probs[0]));
+                    probs.Reverse();
+                    probabilitiesMap.Add(key, probs);
                 }
             }
         }
 
-        public Tuple<double, double> GetProbabilities(string key)
+        public List<double> GetProbabilities(string key)
         {
             return probabilitiesMap[key];
         }
@@ -112,7 +112,12 @@ namespace BayesProject
             Console.WriteLine("Probabilities for \"" + VertexId + "\" with parents [" + ParentsToString() + "]:");
             foreach (var p in probabilitiesMap)
             {
-                Console.WriteLine("\t" + p.Key + ": " + p.Value);
+                Console.Write("\t" + p.Key + ": " );
+                foreach(var prob in p.Value)
+                {
+                    Console.Write(prob + " ");
+                }
+                Console.WriteLine();
             }
             Console.WriteLine();
         }
