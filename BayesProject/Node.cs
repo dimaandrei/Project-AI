@@ -21,8 +21,6 @@ namespace BayesProject
         private TypeOfEvidence evidence = TypeOfEvidence.NotPresent;
         private  Dictionary<string, Tuple<double, double>> probabilitiesMap;
 
-
-
         public Node(String _vertexId)
         {
             this.VertexId = _vertexId;

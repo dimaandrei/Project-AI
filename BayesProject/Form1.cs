@@ -45,9 +45,10 @@ namespace BayesProject
             // Add a comboBox for each node. The items should be {Yes, No, NotPresent}
             ComboBox comboBox = new ComboBox();
             comboBox.Font = new Font("Modern No. 20", 10, FontStyle.Bold);
-            comboBox.Items.Add("Yes");
-            comboBox.Items.Add("No");
-            comboBox.Items.Add("NotPresent");
+            foreach(var i in Enum.GetValues(typeof(TypeOfEvidence)))
+            {
+                comboBox.Items.Add(i);
+            }
 
             // Add a radioButton for each node
             RadioButton radioButton = new RadioButton();
