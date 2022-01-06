@@ -1,0 +1,33 @@
+Nodes: 5
+
+[Banda1, Banda2, Banda3, Banda4]
+Sectiune1: {}
+0.25 0.25 0.25 0.25
+
+[Banda1, Banda2, Banda3, Banda4]
+Sectiune2: {Sectiune1}
+Banda1 0.75 0.25 0.0 0.0
+Banda2 0.25 0.5 0.25 0.0
+Banda3 0.0 0.25 0.5 0.25
+Banda4 0.0 0.0 0.25 0.75
+
+[Banda1, Banda2, Banda3, Banda4]
+Sectiune3: {Sectiune2}
+Banda1 0.75 0.25 0.0 0.0
+Banda2 0.25 0.5 0.25 0.0
+Banda3 0.0 0.25 0.5 0.25
+Banda4 0.0 0.0 0.25 0.75
+
+[Banda1, Banda2, Banda3, Banda4]
+Sectiune4: {Sectiune3}
+Banda1 0.75 0.25 0.0 0.0
+Banda2 0.25 0.5 0.25 0.0
+Banda3 0.0 0.25 0.5 0.25
+Banda4 0.0 0.0 0.25 0.75
+
+[Stanga, Inainte, Dreapta]
+Drum: {Sectiune4}
+Banda1 1.0 0.0 0.0
+Banda2 0.0 1.0 0.0
+Banda3 0.0 1.0 0.0
+Banda4 0.0 0.0 1.0
