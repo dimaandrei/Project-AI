@@ -135,6 +135,8 @@ namespace BayesProject
                 double sum = 0.0;
                 foreach (var ev in domain)
                 {
+                    if (!y.GetEvidenceDomain().Contains(ev))
+                        continue;
                     _bayesNetwork.getNetworkGraph.SetNodeEvidence(y.NodeID, ev);
                     sum += _bayesNetwork.getNetworkGraph.GetProbabilityOfNode(y.NodeID, ev, evidence) * EnumerateAll(CopyNodesList(vars), domain);
                 };
