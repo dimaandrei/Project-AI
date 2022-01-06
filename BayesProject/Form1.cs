@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.IO;
 using System.Windows.Forms;
 
 namespace BayesProject
@@ -14,8 +15,10 @@ namespace BayesProject
         public BayesNetwork bayesNetwork;
         public List<RadioButton> checks;
         public List<ComboBox> comboBoxes;
+        public List<TextBox> textBoxes;
         RichTextBox richTextBox = new RichTextBox();
-        public int incrementForAlign = 1;
+        public int incrementForAlign;
+        private const int DEFAULT_INCREMENT = 2;
 
         /// <summary>
         /// Constructor of class
@@ -25,7 +28,8 @@ namespace BayesProject
             InitializeComponent();
             checks = new List<RadioButton>();
             comboBoxes = new List<ComboBox>();
-            bayesNetwork = new BayesNetwork(@"test.txt");
+            textBoxes = new List<TextBox>();
+            incrementForAlign = DEFAULT_INCREMENT;
         }
 
         /// <summary>
@@ -83,6 +87,8 @@ namespace BayesProject
             // Increment for parallel align
             incrementForAlign++;
 
+            textBoxes.Add(textBox);
+
             return textBox;
         }
 
@@ -97,9 +103,6 @@ namespace BayesProject
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             // Center the form in the middle of screen
             CenterToScreen();
-            // Add a field for each node
-            foreach (var i in bayesNetwork.getNetworkGraph.GetNodes)
-                AddNodeField(i.NodeID + " -> Parents [" + i.ParentsToString() + "]", i.GetEvidenceDomain());
         }
 
         /// <summary>
@@ -112,6 +115,7 @@ namespace BayesProject
             // Clear richTextBox before querry the node
             richTextBox.Clear();
             richTextBox.Focus();
+            richTextBox.Show();
 
             // Check if any radioButton was checked
             bool checkRadioButton = checks.Any(item => item.Checked == true);
@@ -127,7 +131,7 @@ namespace BayesProject
                 // Align and design of richTextBox to append the results
                 richTextBox.Size = new Size(700, 100);
                 richTextBox.Left = 15;
-                richTextBox.Top = 280;
+                richTextBox.Top = incrementForAlign * 45;
                 richTextBox.Font = new Font("Modern No. 20", 10, FontStyle.Bold);
                 richTextBox.ForeColor = Color.Red;
 
@@ -159,7 +163,7 @@ namespace BayesProject
 
                 for (int i = 0; i < probabilities.Length; i++)
                 {
-                    message += "P(" + evidences[i] +") = " + probabilities[i] + Environment.NewLine;
+                    message += "P(" + evidences[i] + ") = " + probabilities[i] + Environment.NewLine;
                 }
 
                 MessageBox.Show(message, "Query Results");
@@ -178,15 +182,66 @@ namespace BayesProject
         /// <param name="e">The event</param>
         private void button2_Click(object sender, EventArgs e)
         {
-            // Enable the radioButton and comboBox for each node when press the select button
-            checks.ForEach(action => action.Enabled = true);
-            comboBoxes.ForEach(action => action.Enabled = true);
+            if (bayesNetwork != null)
+            {
+                // Enable the radioButton and comboBox for each node when press the select button
+                checks.ForEach(action => action.Enabled = true);
+                comboBoxes.ForEach(action => action.Enabled = true);
 
-            // Set the default value of comboBox to NotPresent
-            comboBoxes.ForEach(item => item.Text = "NotPresent");
+                // Set the default value of comboBox to NotPresent
+                comboBoxes.ForEach(item => item.Text = "NotPresent");
 
-            // Enable the querry button
-            button1.Enabled = true;
+                // Enable the querry button
+                button1.Enabled = true;
+            }
+            else
+            {
+                MessageBox.Show("Load a graph first!", "Error");
+            }
+        }
+
+        private void loadNewGraphToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            openFileDialog.Filter = "(*.txt)|*.txt";
+            openFileDialog.FilterIndex = 1;
+            openFileDialog.RestoreDirectory = true;
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                bayesNetwork = new BayesNetwork(openFileDialog.FileName);
+
+                foreach (var textBox in this.textBoxes)
+                    this.Controls.Remove(textBox);
+
+                foreach (var check in this.checks)
+                    this.Controls.Remove(check);
+
+                foreach (var comboBox in this.comboBoxes)
+                    this.Controls.Remove(comboBox);
+
+                this.comboBoxes.Clear();
+                this.checks.Clear();
+                this.textBoxes.Clear();
+
+                incrementForAlign = DEFAULT_INCREMENT;
+
+                // Add a field for each node
+                foreach (var i in bayesNetwork.getNetworkGraph.GetNodes)
+                    AddNodeField(i.NodeID + " -> Parents [" + i.ParentsToString() + "]", i.GetEvidenceDomain());
+
+                richTextBox.Clear();
+                richTextBox.Hide();
+            }
+        }
+
+        private void quitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void helpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("", "Help");
         }
     }
 }
