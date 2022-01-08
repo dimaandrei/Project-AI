@@ -43,7 +43,7 @@ namespace BayesProject
             TextBox textBox = new TextBox();
             textBox.Text = NodeID;
             textBox.Font = new Font("Modern No. 20", 10, FontStyle.Bold);
-            textBox.Size = new Size(200, 300);
+            textBox.Size = new Size(280, 300);
             textBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 
             // Add a comboBox for each node. The items should be {Yes, No, NotPresent}
@@ -72,11 +72,11 @@ namespace BayesProject
 
             // Align radioButton
             radioButton.Top = incrementForAlign * 45;
-            radioButton.Left = 420;
+            radioButton.Left = 520;
 
             // Align comboBox
             comboBox.Top = incrementForAlign * 45;
-            comboBox.Left = 250;
+            comboBox.Left = 350;
 
             // Add the comboBox to an array
             comboBoxes.Add(comboBox);
@@ -132,7 +132,7 @@ namespace BayesProject
                 // Align and design of richTextBox to append the results
                 richTextBox.Size = new Size(700, 100);
                 richTextBox.Left = 15;
-                richTextBox.Top = incrementForAlign * 45;
+                richTextBox.Top = incrementForAlign * 49;
                 richTextBox.Font = new Font("Modern No. 20", 10, FontStyle.Bold);
                 richTextBox.ForeColor = Color.Red;
 
