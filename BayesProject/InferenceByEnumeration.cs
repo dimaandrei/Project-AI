@@ -22,10 +22,10 @@ namespace BayesProject
         }
 
         /// <summary>
-        /// 
+        ///  Method that claculate all probabilities for a query node
         /// </summary>
         /// <param name="queryVariable">Query node</param>
-        /// <returns>An array of probabilities for query variable</returns>
+        /// <returns>An array of probabilities</returns>
         public double[] EnumerationAsk(String queryVariable)
         {
             var nodes = _bayesNetwork.NetworkGraph.KahnSorting();
@@ -82,16 +82,13 @@ namespace BayesProject
 
             return Normalization(q);
         }
-        private List<Node> CopyNodesList(List<Node> nodes)
-        {
-            List<Node> newList = new List<Node>();
-            foreach (var node in nodes)
-            {
-                newList.Add(node.CloneNode());
-            }
-            return newList;
-        }
 
+        /// <summary>
+        /// Recursive metod that calculate probability of a node in a given situation
+        /// </summary>
+        /// <param name="vars">List of nodes</param>
+        /// <param name="domain">Evidences domain</param>
+        /// <returns>Probability in a given situation</returns>
         private double EnumerateAll(List<Node> vars, List<String> domain)
         {
             if (vars.Count == 0)
@@ -145,7 +142,27 @@ namespace BayesProject
             }
         }
 
-        public double[] Normalization(double[] q)
+        /// <summary>
+        /// Creates a deep copy to a list of nodes
+        /// </summary>
+        /// <param name="nodes">List of nodes</param>
+        /// <returns>A copy of list</returns>
+        private List<Node> CopyNodesList(List<Node> nodes)
+        {
+            List<Node> newList = new List<Node>();
+            foreach (var node in nodes)
+            {
+                newList.Add(node.CloneNode());
+            }
+            return newList;
+        }
+
+        /// <summary>
+        /// Normalize the probabilities
+        /// </summary>
+        /// <param name="q">Array of probailities</param>
+        /// <returns>Normalized array of probabilities</returns>
+        private double[] Normalization(double[] q)
         {
             double sum = q.Sum();
 
