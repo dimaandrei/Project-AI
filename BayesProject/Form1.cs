@@ -53,6 +53,7 @@ namespace BayesProject
             {
                 comboBox.Items.Add(i);
             }
+            comboBox.Items.Add(Node.NOT_PRESENT);
 
             // Add a radioButton for each node
             RadioButton radioButton = new RadioButton();
