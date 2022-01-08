@@ -241,7 +241,7 @@ namespace BayesProject
 
         private void helpToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("", "Help");
+            MessageBox.Show("Nodes: 5\n\n[Yes, No]\nFlu: { }\n0.1 0.9\n\n[Yes, No]\nAbscess: { }\n0.05 0.95\n\n[Yes, No]\nFever: { Flu, Abscess}\nYes Yes 0.8 0.2\nYes No 0.7 0.3\nNo Yes 0.25 0.75\nNo No 0.05 0.95\n\n[Yes, No]\nFatigue: { Fever}\nYes 0.6 0.4\nNo 0.2 0.8\n\n[Yes, No]\nAnorexia: { Fever}\nYes 0.5 0.5\nNo 0.1 0.9", "Exemplu de descriere a unei rețele bayesiene");
         }
     }
 }
