@@ -12,12 +12,12 @@ namespace BayesProject
 {
     public partial class Form1 : Form
     {
-        public BayesNetwork bayesNetwork;
-        public List<RadioButton> checks;
-        public List<ComboBox> comboBoxes;
-        public List<TextBox> textBoxes;
-        RichTextBox richTextBox = new RichTextBox();
-        public int incrementForAlign;
+        private BayesNetwork _bayesNetwork;
+        private List<RadioButton> _checks;
+        private List<ComboBox> _comboBoxes;
+        private List<TextBox> _textBoxes;
+        private RichTextBox _richTextBox;
+        private int _incrementForAlign;
         private const int DEFAULT_INCREMENT = 2;
 
         /// <summary>
@@ -26,22 +26,23 @@ namespace BayesProject
         public Form1()
         {
             InitializeComponent();
-            checks = new List<RadioButton>();
-            comboBoxes = new List<ComboBox>();
-            textBoxes = new List<TextBox>();
-            incrementForAlign = DEFAULT_INCREMENT;
+            _checks = new List<RadioButton>();
+            _comboBoxes = new List<ComboBox>();
+            _textBoxes = new List<TextBox>();
+            _richTextBox = new RichTextBox();
+            _incrementForAlign = DEFAULT_INCREMENT;
         }
 
         /// <summary>
         /// Function which add the data of each node
         /// </summary>
-        /// <param name="NodeID">The name of node</param>
+        /// <param name="nodeID">The name of node</param>
         /// <returns>Returns a textbox</returns>
-        public TextBox AddNodeField(string NodeID, List<String> domain)
+        public TextBox AddNodeField(string nodeID, List<String> domain)
         {
             // Add a textBox for each node
             TextBox textBox = new TextBox();
-            textBox.Text = NodeID;
+            textBox.Text = nodeID;
             textBox.Font = new Font("Modern No. 20", 10, FontStyle.Bold);
             textBox.Size = new Size(280, 300);
             textBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -59,36 +60,36 @@ namespace BayesProject
             RadioButton radioButton = new RadioButton();
 
             // Add the objects to Form
-            this.Controls.Add(textBox);
-            this.Controls.Add(comboBox);
-            this.Controls.Add(radioButton);
+            Controls.Add(textBox);
+            Controls.Add(comboBox);
+            Controls.Add(radioButton);
 
             // The radioButton and the comboBox should be disabled until you want to select a node to querry
             radioButton.Enabled = false;
             comboBox.Enabled = false;
 
             // Add the radioButton to an array
-            checks.Add(radioButton);
+            _checks.Add(radioButton);
 
             // Align radioButton
-            radioButton.Top = incrementForAlign * 45;
+            radioButton.Top = _incrementForAlign * 45;
             radioButton.Left = 520;
 
             // Align comboBox
-            comboBox.Top = incrementForAlign * 45;
+            comboBox.Top = _incrementForAlign * 45;
             comboBox.Left = 350;
 
             // Add the comboBox to an array
-            comboBoxes.Add(comboBox);
+            _comboBoxes.Add(comboBox);
 
             // Align textBox
-            textBox.Top = incrementForAlign * 45;
+            textBox.Top = _incrementForAlign * 45;
             textBox.Left = 30;
 
             // Increment for parallel align
-            incrementForAlign++;
+            _incrementForAlign++;
 
-            textBoxes.Add(textBox);
+            _textBoxes.Add(textBox);
 
             return textBox;
         }
@@ -101,7 +102,7 @@ namespace BayesProject
         private void Form1_Load(object sender, EventArgs e)
         {
             // Fix the style of FormBorder
-            this.FormBorderStyle = FormBorderStyle.FixedSingle;
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             // Center the form in the middle of screen
             CenterToScreen();
         }
@@ -114,15 +115,15 @@ namespace BayesProject
         private void button1_Click(object sender, EventArgs e)
         {
             // Clear richTextBox before querry the node
-            richTextBox.Clear();
-            richTextBox.Focus();
-            richTextBox.Show();
+            _richTextBox.Clear();
+            _richTextBox.Focus();
+            _richTextBox.Show();
 
             // Check if any radioButton was checked
-            bool checkRadioButton = checks.Any(item => item.Checked == true);
+            bool checkRadioButton = _checks.Any(item => item.Checked == true);
 
             // Find the index of the querried node
-            int indexChecked = checks.FindIndex(index => index.Checked == true);
+            int indexChecked = _checks.FindIndex(index => index.Checked == true);
 
             // Calculate the probabilities if a radioButton is checked
             if (checkRadioButton)
@@ -130,37 +131,37 @@ namespace BayesProject
                 // Querry function
 
                 // Align and design of richTextBox to append the results
-                richTextBox.Size = new Size(700, 100);
-                richTextBox.Left = 15;
-                richTextBox.Top = incrementForAlign * 49;
-                richTextBox.Font = new Font("Modern No. 20", 10, FontStyle.Bold);
-                richTextBox.ForeColor = Color.Red;
+                _richTextBox.Size = new Size(700, 100);
+                _richTextBox.Left = 15;
+                _richTextBox.Top = _incrementForAlign * 49;
+                _richTextBox.Font = new Font("Modern No. 20", 10, FontStyle.Bold);
+                _richTextBox.ForeColor = Color.Red;
 
                 // Add the richTextBox to the Form
-                this.Controls.Add(richTextBox);
+                Controls.Add(_richTextBox);
 
                 // Set the evidence of each node
-                for (var i = 0; i < bayesNetwork.getNetworkGraph.GetNodes.Count; ++i)
+                for (var i = 0; i < _bayesNetwork.NetworkGraph.Nodes.Count; ++i)
                 {
-                    bayesNetwork.getNetworkGraph.GetNodes[i].Evidence = comboBoxes[i].Text;
+                    _bayesNetwork.NetworkGraph.Nodes[i].Evidence = _comboBoxes[i].Text;
 
                     // Append to the richTextBox the evidence of each node
-                    richTextBox.AppendText("The node {" + bayesNetwork.getNetworkGraph.GetNodes[i].NodeID + "} was set with evidence {" + bayesNetwork.getNetworkGraph.GetNodes[i].Evidence + "}." + System.Environment.NewLine);
+                    _richTextBox.AppendText("The node {" + _bayesNetwork.NetworkGraph.Nodes[i].NodeID + "} was set with evidence {" + _bayesNetwork.NetworkGraph.Nodes[i].Evidence + "}." + System.Environment.NewLine);
                     // Display the evidence of each node
-                    Console.WriteLine("The node {" + bayesNetwork.getNetworkGraph.GetNodes[i].NodeID + "} was set with evidence {" + bayesNetwork.getNetworkGraph.GetNodes[i].Evidence + "}.");
+                    Console.WriteLine("The node {" + _bayesNetwork.NetworkGraph.Nodes[i].NodeID + "} was set with evidence {" + _bayesNetwork.NetworkGraph.Nodes[i].Evidence + "}.");
                 }
 
                 // Append to the richTextBox the evidence of selected node
-                richTextBox.AppendText("The node {" + bayesNetwork.getNetworkGraph.GetNodes[indexChecked].NodeID + "} was queried with evidence {" + bayesNetwork.getNetworkGraph.GetNodes[indexChecked].Evidence + "}.");
+                _richTextBox.AppendText("The node {" + _bayesNetwork.NetworkGraph.Nodes[indexChecked].NodeID + "} was queried with evidence {" + _bayesNetwork.NetworkGraph.Nodes[indexChecked].Evidence + "}.");
                 // Display the evidence of the selected node
-                Console.WriteLine("The node {" + bayesNetwork.getNetworkGraph.GetNodes[indexChecked].NodeID + "} was queried with evidence {" + bayesNetwork.getNetworkGraph.GetNodes[indexChecked].Evidence + "}.");
+                Console.WriteLine("The node {" + _bayesNetwork.NetworkGraph.Nodes[indexChecked].NodeID + "} was queried with evidence {" + _bayesNetwork.NetworkGraph.Nodes[indexChecked].Evidence + "}.");
 
-                InferenceByEnumeration inf = new InferenceByEnumeration(bayesNetwork);
-                var probabilities = inf.EnumerationAsk(bayesNetwork.getNetworkGraph.GetNodes[indexChecked].NodeID);
+                InferenceByEnumeration inf = new InferenceByEnumeration(_bayesNetwork);
+                var probabilities = inf.EnumerationAsk(_bayesNetwork.NetworkGraph.Nodes[indexChecked].NodeID);
                 //Console.WriteLine("Prob: " + prob[0] + " " + prob[1]);
 
                 var message = "";
-                var evidences = bayesNetwork.getNetworkGraph.GetNode(bayesNetwork.getNetworkGraph.GetNodes[indexChecked].NodeID).GetEvidenceDomain();
+                var evidences = _bayesNetwork.NetworkGraph.GetNode(_bayesNetwork.NetworkGraph.Nodes[indexChecked].NodeID).GetEvidenceDomain();
 
                 for (int i = 0; i < probabilities.Length; i++)
                 {
@@ -183,14 +184,14 @@ namespace BayesProject
         /// <param name="e">The event</param>
         private void button2_Click(object sender, EventArgs e)
         {
-            if (bayesNetwork != null)
+            if (_bayesNetwork != null)
             {
                 // Enable the radioButton and comboBox for each node when press the select button
-                checks.ForEach(action => action.Enabled = true);
-                comboBoxes.ForEach(action => action.Enabled = true);
+                _checks.ForEach(action => action.Enabled = true);
+                _comboBoxes.ForEach(action => action.Enabled = true);
 
                 // Set the default value of comboBox to NotPresent
-                comboBoxes.ForEach(item => item.Text = "NotPresent");
+                _comboBoxes.ForEach(item => item.Text = "NotPresent");
 
                 // Enable the querry button
                 button1.Enabled = true;
@@ -209,29 +210,29 @@ namespace BayesProject
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                bayesNetwork = new BayesNetwork(openFileDialog.FileName);
+                _bayesNetwork = new BayesNetwork(openFileDialog.FileName);
 
-                foreach (var textBox in this.textBoxes)
-                    this.Controls.Remove(textBox);
+                foreach (var textBox in _textBoxes)
+                    Controls.Remove(textBox);
 
-                foreach (var check in this.checks)
-                    this.Controls.Remove(check);
+                foreach (var check in _checks)
+                    Controls.Remove(check);
 
-                foreach (var comboBox in this.comboBoxes)
-                    this.Controls.Remove(comboBox);
+                foreach (var comboBox in _comboBoxes)
+                    Controls.Remove(comboBox);
 
-                this.comboBoxes.Clear();
-                this.checks.Clear();
-                this.textBoxes.Clear();
+                _comboBoxes.Clear();
+                _checks.Clear();
+                _textBoxes.Clear();
 
-                incrementForAlign = DEFAULT_INCREMENT;
+                _incrementForAlign = DEFAULT_INCREMENT;
 
                 // Add a field for each node
-                foreach (var i in bayesNetwork.getNetworkGraph.GetNodes)
+                foreach (var i in _bayesNetwork.NetworkGraph.Nodes)
                     AddNodeField(i.NodeID + " -> Parents [" + i.ParentsToString() + "]", i.GetEvidenceDomain());
 
-                richTextBox.Clear();
-                richTextBox.Hide();
+                _richTextBox.Clear();
+                _richTextBox.Hide();
             }
         }
 

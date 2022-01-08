@@ -28,13 +28,13 @@ namespace BayesProject
         /// <returns>An array of probabilities for query variable</returns>
         public double[] EnumerationAsk(String queryVariable)
         {
-            var nodes = _bayesNetwork.getNetworkGraph.KahnSorting();
+            var nodes = _bayesNetwork.NetworkGraph.KahnSorting();
 
-            var querryNode = _bayesNetwork.getNetworkGraph.GetNode(queryVariable);
+            var querryNode = _bayesNetwork.NetworkGraph.GetNode(queryVariable);
 
             if (querryNode == null) throw new Exception("Querry node - not found!");
 
-            double[] Q = new double[querryNode.GetEvidenceDomain().Count];
+            double[] q = new double[querryNode.GetEvidenceDomain().Count];
 
             foreach (var node in nodes)
             {
@@ -49,15 +49,15 @@ namespace BayesProject
 
                         if (node.Evidence == typeOfEvidence)
                         {
-                            Q[j] = 1.0;
+                            q[j] = 1.0;
                         }
                         else
                         {
-                            Q[j] = 0.0;
+                            q[j] = 0.0;
                         }
                         ++j;
                     }
-                    return Q;
+                    return q;
                 }
             }
 
@@ -69,18 +69,18 @@ namespace BayesProject
                 if (typeOfEvidence == Node.NOT_PRESENT)
                     continue;
 
-                _bayesNetwork.getNetworkGraph.SetNodeEvidence(queryVariable, typeOfEvidence);
+                _bayesNetwork.NetworkGraph.SetNodeEvidence(queryVariable, typeOfEvidence);
                 var vars = CopyNodesList(nodes);
 
-                _bayesNetwork.getNetworkGraph.SetNodeEvidence(queryVariable, typeOfEvidence);
+                _bayesNetwork.NetworkGraph.SetNodeEvidence(queryVariable, typeOfEvidence);
 
-                Q[i] = EnumerateAll(vars, querryNode.GetEvidenceDomain());
+                q[i] = EnumerateAll(vars, querryNode.GetEvidenceDomain());
 
-                _bayesNetwork.getNetworkGraph.SetNodeEvidence(queryVariable, Node.NOT_PRESENT);
+                _bayesNetwork.NetworkGraph.SetNodeEvidence(queryVariable, Node.NOT_PRESENT);
                 i++;
             }
 
-            return Normalization(Q);
+            return Normalization(q);
         }
         private List<Node> CopyNodesList(List<Node> nodes)
         {
@@ -102,7 +102,7 @@ namespace BayesProject
 
             List<Node> parents = new List<Node>();
 
-            foreach (var node in _bayesNetwork.getNetworkGraph.GetNodes)
+            foreach (var node in _bayesNetwork.NetworkGraph.Nodes)
             {
                 if (y.IsChidOf(node.NodeID))
                 {
@@ -128,7 +128,7 @@ namespace BayesProject
 
             if (y.Evidence != Node.NOT_PRESENT)
             {
-                return _bayesNetwork.getNetworkGraph.GetProbabilityOfNode(y.NodeID, y.Evidence, evidence) * EnumerateAll(vars, domain);
+                return _bayesNetwork.NetworkGraph.GetProbabilityOfNode(y.NodeID, y.Evidence, evidence) * EnumerateAll(vars, domain);
             }
             else
             {
@@ -137,24 +137,24 @@ namespace BayesProject
                 {
                     if (!y.GetEvidenceDomain().Contains(ev))
                         continue;
-                    _bayesNetwork.getNetworkGraph.SetNodeEvidence(y.NodeID, ev);
-                    sum += _bayesNetwork.getNetworkGraph.GetProbabilityOfNode(y.NodeID, ev, evidence) * EnumerateAll(CopyNodesList(vars), domain);
+                    _bayesNetwork.NetworkGraph.SetNodeEvidence(y.NodeID, ev);
+                    sum += _bayesNetwork.NetworkGraph.GetProbabilityOfNode(y.NodeID, ev, evidence) * EnumerateAll(CopyNodesList(vars), domain);
                 };
-                _bayesNetwork.getNetworkGraph.SetNodeEvidence(y.NodeID, Node.NOT_PRESENT);
+                _bayesNetwork.NetworkGraph.SetNodeEvidence(y.NodeID, Node.NOT_PRESENT);
                 return sum;
             }
         }
 
-        public double[] Normalization(double[] Q)
+        public double[] Normalization(double[] q)
         {
-            double sum = Q.Sum();
+            double sum = q.Sum();
 
-            for (var i = 0; i < Q.Length; i++)
+            for (var i = 0; i < q.Length; i++)
             {
-                Q[i] /= sum;
+                q[i] /= sum;
             }
 
-            return Q;
+            return q;
         }
     }
 }

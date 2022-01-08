@@ -8,15 +8,16 @@ namespace BayesProject
 {
     public class BayesNetwork
     {
-        private Graph networkGraph;
+        private Graph _networkGraph;
 
         public BayesNetwork(string filePath)
         {
             List<string> lines = System.IO.File.ReadLines(filePath).ToList();
 
             int noNodes = Int32.Parse(lines[0].Split(':')[1].Trim());
-            networkGraph = new Graph(noNodes);
+            _networkGraph = new Graph(noNodes);
             int pos = 2;
+
             //number of nodes
             for (int i = 0; i < noNodes; ++i)
             {
@@ -35,31 +36,31 @@ namespace BayesProject
 
                 if (parents.Length == 1 && string.IsNullOrEmpty(parents[0]))
                 {
-                    networkGraph.AddNodes(node, null);
-                    networkGraph.SetProbabilities(nodeID, lines.GetRange(pos + 1, 1));
+                    _networkGraph.AddNodes(node, null);
+                    _networkGraph.SetProbabilities(nodeID, lines.GetRange(pos + 1, 1));
                     pos += 3;
                 }
                 else
                 {
-                    networkGraph.AddNodes(node, parents);
+                    _networkGraph.AddNodes(node, parents);
                     var noOfProb = 1;
-                    foreach(var parent in parents)
+
+                    foreach (var parent in parents)
                     {
-                        noOfProb *= networkGraph.GetNode(parent).GetEvidencesNumber();
+                        noOfProb *= _networkGraph.GetNode(parent).GetEvidencesNumber();
                     }
 
-                    networkGraph.SetProbabilities(nodeID, lines.GetRange(pos + 1, noOfProb));
-                    pos += noOfProb+2;
+                    _networkGraph.SetProbabilities(nodeID, lines.GetRange(pos + 1, noOfProb));
+                    pos += noOfProb + 2;
                 }
             }
-            //don't forget to enable console output
-            networkGraph.PrintNodesProbabilities();
-            //Console.WriteLine(networkGraph.GetProbabilityOfNode("Fever", "Yes", "No No"));
+
+            _networkGraph.PrintNodesProbabilities();
         }
 
-        public Graph getNetworkGraph
+        public Graph NetworkGraph
         {
-            get { return networkGraph; }
+            get { return _networkGraph; }
         }
     }
 }
