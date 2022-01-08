@@ -1,0 +1,26 @@
+Nodes: 5
+
+[Yes, No]
+Burglary: {}
+0.001 0.999
+
+[Yes, No]
+Earthquake: {}
+0.002 0.998
+
+[Yes, No]
+Alarm: {Burglary, Earthquake}
+Yes Yes 0.95 0.05
+Yes No 0.94 0.06
+No Yes 0.29 0.71
+No No 0.001 0.999
+
+[Yes, No]
+JohnCalls: {Alarm}
+Yes 0.90 0.10
+No 0.05 0.95
+
+[Yes, No]
+MaryCalls: {Alarm}
+Yes 0.70 0.30
+No 0.01 0.99
