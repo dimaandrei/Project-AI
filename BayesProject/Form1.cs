@@ -10,8 +10,12 @@ using System.Windows.Forms;
 
 namespace BayesProject
 {
+    /// <summary>
+    /// Form class
+    /// </summary>
     public partial class Form1 : Form
     {
+        // Private members
         private BayesNetwork _bayesNetwork;
         private List<RadioButton> _checks;
         private List<ComboBox> _comboBoxes;
@@ -202,6 +206,11 @@ namespace BayesProject
             }
         }
 
+        /// <summary>
+        /// Load functions
+        /// </summary>
+        /// <param name="sender">The sender</param>
+        /// <param name="e">The event</param>
         private void loadNewGraphToolStripMenuItem_Click(object sender, EventArgs e)
         {
             openFileDialog.Filter = "(*.txt)|*.txt";
@@ -236,11 +245,21 @@ namespace BayesProject
             }
         }
 
+        /// <summary>
+        /// Quit function
+        /// </summary>
+        /// <param name="sender">The sender</param>
+        /// <param name="e">The event</param>
         private void quitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
 
+        /// <summary>
+        /// Help function
+        /// </summary>
+        /// <param name="sender">The sender</param>
+        /// <param name="e">The event</param>
         private void helpToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Nodes: 5\n\n[Yes, No]\nFlu: { }\n0.1 0.9\n\n[Yes, No]\nAbscess: { }\n0.05 0.95\n\n[Yes, No]\nFever: { Flu, Abscess}\nYes Yes 0.8 0.2\nYes No 0.7 0.3\nNo Yes 0.25 0.75\nNo No 0.05 0.95\n\n[Yes, No]\nFatigue: { Fever}\nYes 0.6 0.4\nNo 0.2 0.8\n\n[Yes, No]\nAnorexia: { Fever}\nYes 0.5 0.5\nNo 0.1 0.9", "Exemplu de descriere a unei rețele bayesiene");

@@ -31,11 +31,9 @@ namespace BayesProject
             var nodes = _bayesNetwork.NetworkGraph.KahnSorting();
 
             var querryNode = _bayesNetwork.NetworkGraph.GetNode(queryVariable);
-
             if (querryNode == null) throw new Exception("Querry node - not found!");
 
             double[] q = new double[querryNode.GetEvidenceDomain().Count];
-
             foreach (var node in nodes)
             {
                 var nodeEvidenceDomain = node.GetEvidenceDomain();
@@ -61,9 +59,7 @@ namespace BayesProject
                 }
             }
 
-
             int i = 0;
-
             foreach (var typeOfEvidence in querryNode.GetEvidenceDomain())
             {
                 if (typeOfEvidence == Node.NOT_PRESENT)
@@ -98,7 +94,6 @@ namespace BayesProject
             vars.Remove(y);
 
             List<Node> parents = new List<Node>();
-
             foreach (var node in _bayesNetwork.NetworkGraph.Nodes)
             {
                 if (y.IsChidOf(node.NodeID))
@@ -108,7 +103,6 @@ namespace BayesProject
             }
 
             var evidence = "";
-
             if (parents.Count == 0)
             {
                 evidence = "p";
@@ -170,7 +164,6 @@ namespace BayesProject
             {
                 q[i] /= sum;
             }
-
             return q;
         }
     }

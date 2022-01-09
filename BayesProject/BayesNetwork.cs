@@ -6,10 +6,18 @@ using System.Text.RegularExpressions;
 
 namespace BayesProject
 {
+    /// <summary>
+    /// BayesNetwork class
+    /// </summary>
     public class BayesNetwork
     {
+        // Private members
         private Graph _networkGraph;
 
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        /// <param name="filePath">The path of file which containts the parameters of the bayesian network</param>
         public BayesNetwork(string filePath)
         {
             List<string> lines = System.IO.File.ReadLines(filePath).ToList();
@@ -58,6 +66,9 @@ namespace BayesProject
             _networkGraph.PrintNodesProbabilities();
         }
 
+        /// <summary>
+        /// Getter of the graph
+        /// </summary>
         public Graph NetworkGraph
         {
             get { return _networkGraph; }
