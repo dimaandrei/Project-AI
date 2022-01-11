@@ -7,11 +7,9 @@ namespace BayesProject
     public class Graph
     {
         private readonly List<Node> nodes;
-        private int noNodes;
 
-        public Graph(int _noNodes)
+        public Graph()
         {
-            this.noNodes = _noNodes;
             this.nodes = new List<Node>();
         }
 
@@ -66,9 +64,9 @@ namespace BayesProject
         {
             List<Node> L = new List<Node>();
             List<Node> S = new List<Node>();
-            int[] indegree=new int[noNodes];
+            int[] indegree=new int[this.nodes.Count];
 
-            for(int i = 0; i < noNodes; ++i)
+            for(int i = 0; i < this.nodes.Count; ++i)
             {
                 indegree[i] = nodes[i].ParentsNumber;
             }

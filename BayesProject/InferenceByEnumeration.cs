@@ -148,6 +148,8 @@ namespace BayesProject
         public double[] Normalization(double[] Q)
         {
             double sum = Q.Sum();
+            if (sum == 0.0)
+                return Q;
 
             for (var i = 0; i < Q.Length; i++)
             {
@@ -155,6 +157,12 @@ namespace BayesProject
             }
 
             return Q;
+        }
+
+        public BayesNetwork Netowrk
+        {
+            get { return _bayesNetwork; }
+            set { _bayesNetwork = value; }
         }
     }
 }

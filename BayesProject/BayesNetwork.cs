@@ -15,7 +15,7 @@ namespace BayesProject
             List<string> lines = System.IO.File.ReadLines(filePath).ToList();
 
             int noNodes = Int32.Parse(lines[0].Split(':')[1].Trim());
-            networkGraph = new Graph(noNodes);
+            networkGraph = new Graph();
             int pos = 2;
             //number of nodes
             for (int i = 0; i < noNodes; ++i)
@@ -53,7 +53,7 @@ namespace BayesProject
                 }
             }
             //don't forget to enable console output
-            networkGraph.PrintNodesProbabilities();
+            //networkGraph.PrintNodesProbabilities();
             //Console.WriteLine(networkGraph.GetProbabilityOfNode("Fever", "Yes", "No No"));
         }
 
