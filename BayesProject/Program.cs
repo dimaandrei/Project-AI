@@ -13,7 +13,6 @@ namespace BayesProject
         [STAThread]
         static void Main()
         {
-            //BayesNetwork bayesNetwork = new BayesNetwork(@"test.txt");
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());

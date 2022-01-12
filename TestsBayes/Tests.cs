@@ -62,7 +62,7 @@ namespace TestsBayes
             g.AddNodes(new Node("v1"),null);
             g.AddNodes(new Node("v2"), null);
             g.AddNodes(new Node("v3"), null);
-            Assert.IsTrue(g.GetNodes.Count == 3);
+            Assert.IsTrue(g.Nodes.Count == 3);
         }
 
         [TestMethod]
@@ -126,14 +126,14 @@ namespace TestsBayes
         public void TestReadNetwork()
         {
             BayesNetwork bayesNetwork = new BayesNetwork("test.txt");
-            Assert.IsTrue(bayesNetwork.getNetworkGraph.GetNodes.Count != 0);
+            Assert.IsTrue(bayesNetwork.NetworkGraph.Nodes.Count != 0);
         }
 
         [TestMethod]//fail
         public void TestReadBadNetwork()
         {
             BayesNetwork bayesNetwork = new BayesNetwork("badNet.txt");
-            Assert.IsTrue(bayesNetwork.getNetworkGraph.GetNodes.Count != 0);
+            Assert.IsTrue(bayesNetwork.NetworkGraph.Nodes.Count != 0);
         }
 
         [ExpectedException(typeof(System.ArgumentOutOfRangeException), @"Index was out of range. Must be non-negative and less than the size of the collection")]
@@ -141,7 +141,7 @@ namespace TestsBayes
         public void TestInvalidityReadBadNetwork()
         {
             BayesNetwork bayesNetwork = new BayesNetwork("badNet.txt");
-            Assert.IsTrue(bayesNetwork.getNetworkGraph.GetNodes.Count != 0);
+            Assert.IsTrue(bayesNetwork.NetworkGraph.Nodes.Count != 0);
         }
 
         [ExpectedException(typeof(System.IO.FileNotFoundException), @"Could not find file 'D:\Andrei\Facultate\AN4SEM1\IA\Project-AI\TestsBayes\bin\Debug\badNet.txt")]
@@ -149,7 +149,7 @@ namespace TestsBayes
         public void TestReadNetworkFromInexistentFile()
         {
             BayesNetwork bayesNetwork = new BayesNetwork("badPath.txt");
-            Assert.IsTrue(bayesNetwork.getNetworkGraph.GetNodes.Count != 0);
+            Assert.IsTrue(bayesNetwork.NetworkGraph.Nodes.Count != 0);
         }
     }
 
@@ -193,8 +193,8 @@ namespace TestsBayes
         [TestMethod]
         public void Test4QueryNode()
         {
-            inf.Netowrk.getNetworkGraph.SetNodeEvidence("Fatigue", "Yes");
-            inf.Netowrk.getNetworkGraph.SetNodeEvidence("Anorexia", "Yes");
+            inf.Netowrk.NetworkGraph.SetNodeEvidence("Fatigue", "Yes");
+            inf.Netowrk.NetworkGraph.SetNodeEvidence("Anorexia", "Yes");
             var p = inf.EnumerationAsk("Flu");
             
             //Test P(Yes) = 0.396281443674809
@@ -204,8 +204,8 @@ namespace TestsBayes
         [TestMethod]//fail
         public void Test5QueryNode() 
         {
-            inf.Netowrk.getNetworkGraph.SetNodeEvidence("Fatigue", "Yes");
-            inf.Netowrk.getNetworkGraph.SetNodeEvidence("Anorexia", "Yes");
+            inf.Netowrk.NetworkGraph.SetNodeEvidence("Fatigue", "Yes");
+            inf.Netowrk.NetworkGraph.SetNodeEvidence("Anorexia", "Yes");
             var p = inf.EnumerationAsk("Flu");
 
             //Test P(No) = 0.396281443674809
@@ -215,10 +215,10 @@ namespace TestsBayes
         [TestMethod]//Invalidity
         public void Test6QueryNode() 
         {
-            inf.Netowrk.getNetworkGraph.SetNodeEvidence("Fatigue", "Yes");
-            inf.Netowrk.getNetworkGraph.SetNodeEvidence("Anorexia", "Yes");
-            inf.Netowrk.getNetworkGraph.SetNodeEvidence("Fever", "Yes");
-            inf.Netowrk.getNetworkGraph.SetNodeEvidence("Flu", "Yes");
+            inf.Netowrk.NetworkGraph.SetNodeEvidence("Fatigue", "Yes");
+            inf.Netowrk.NetworkGraph.SetNodeEvidence("Anorexia", "Yes");
+            inf.Netowrk.NetworkGraph.SetNodeEvidence("Fever", "Yes");
+            inf.Netowrk.NetworkGraph.SetNodeEvidence("Flu", "Yes");
             var p = inf.EnumerationAsk("Fever");
 
             //Test P(Yes) != 0
@@ -228,9 +228,9 @@ namespace TestsBayes
         [TestMethod]
         public void Test7QueryNode()
         {
-            inf.Netowrk.getNetworkGraph.SetNodeEvidence("Fatigue", "No");
-            inf.Netowrk.getNetworkGraph.SetNodeEvidence("Abscess", "Yes");
-            inf.Netowrk.getNetworkGraph.SetNodeEvidence("Flu", "No");
+            inf.Netowrk.NetworkGraph.SetNodeEvidence("Fatigue", "No");
+            inf.Netowrk.NetworkGraph.SetNodeEvidence("Abscess", "Yes");
+            inf.Netowrk.NetworkGraph.SetNodeEvidence("Flu", "No");
             var p = inf.EnumerationAsk("Anorexia");
 
             //Test P(No) != 0.842857142857143
@@ -240,9 +240,9 @@ namespace TestsBayes
         [TestMethod]//Invalidity
         public void Test8QueryNode()
         {
-            inf.Netowrk.getNetworkGraph.SetNodeEvidence("Fatigue", "No");
-            inf.Netowrk.getNetworkGraph.SetNodeEvidence("Abscess", "Yes");
-            inf.Netowrk.getNetworkGraph.SetNodeEvidence("Flu", "No");
+            inf.Netowrk.NetworkGraph.SetNodeEvidence("Fatigue", "No");
+            inf.Netowrk.NetworkGraph.SetNodeEvidence("Abscess", "Yes");
+            inf.Netowrk.NetworkGraph.SetNodeEvidence("Flu", "No");
             var p = inf.EnumerationAsk("Anorexia");
 
             //Test P(Yes) == 3
@@ -253,9 +253,9 @@ namespace TestsBayes
         public void Test9QueryNode()
         {
 
-            inf.Netowrk.getNetworkGraph.SetNodeEvidence("Fatigue", "No");
-            inf.Netowrk.getNetworkGraph.SetNodeEvidence("Abscess", "Yes");
-            inf.Netowrk.getNetworkGraph.SetNodeEvidence("Flu", "No");
+            inf.Netowrk.NetworkGraph.SetNodeEvidence("Fatigue", "No");
+            inf.Netowrk.NetworkGraph.SetNodeEvidence("Abscess", "Yes");
+            inf.Netowrk.NetworkGraph.SetNodeEvidence("Flu", "No");
             var p = inf.EnumerationAsk("Anorexia");
             double sum = 0.0;
             foreach (var i in p)
@@ -270,9 +270,9 @@ namespace TestsBayes
         public void Test10QueryNode()
         {
 
-            inf.Netowrk.getNetworkGraph.SetNodeEvidence("Fatigue", "No");
-            inf.Netowrk.getNetworkGraph.SetNodeEvidence("Abscess", "Yes");
-            inf.Netowrk.getNetworkGraph.SetNodeEvidence("Flu", "No");
+            inf.Netowrk.NetworkGraph.SetNodeEvidence("Fatigue", "No");
+            inf.Netowrk.NetworkGraph.SetNodeEvidence("Abscess", "Yes");
+            inf.Netowrk.NetworkGraph.SetNodeEvidence("Flu", "No");
             var p = inf.EnumerationAsk("Fever");
             double sum = 0.0;
             foreach (var i in p)
